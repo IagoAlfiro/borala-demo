@@ -22,7 +22,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--profundo);color:var(--texto);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-input{font:inherit;color:inherit}
+input,select{font:inherit;color:inherit}
 [hidden]{display:none!important}
 .mono{font-family:var(--mono)}
 
@@ -774,6 +774,7 @@ if (typeof module !== 'undefined') module.exports = Mapa;
 // regras de confiança do VIBEMETRO §6.6. `Ficha.modelo` é puro (testado).
 const Ficha = (() => {
   const CAPA = { samba: '#D9713E', bar: '#C29455', pub: '#C29455', balada: '#E0463C', show: '#E0463C', lounge: '#4E9D96', restaurante: '#4E9D96' };
+  const capaCor = cat => CAPA[cat] || '#24408E';
   const fmt1 = n => n == null ? null : n.toFixed(1).replace('.', ',');
   const RAIO_CHECKIN_KM = 0.3;
 
@@ -800,7 +801,7 @@ const Ficha = (() => {
       horario: Tempo.rotuloHorario(e) + serie, local: e.venue, bairro: e.bairro.toUpperCase(),
       distancia: d == null ? '' : ' · ' + (d < 10 ? d.toFixed(1).replace('.', ',') : Math.round(d)) + ' KM',
       verificado: !!e.verificado, seg: fmt1(e.seguranca), nota_app: fmt1(e.wr), n_rev: e.n_rev, nota_ext: fmt1(e.nota_externa),
-      preco: '$'.repeat(e.preco), agitacao: e.agitacao, capaCor: CAPA[e.cat] || '#24408E', emoji: e.emoji || '🎉', descricao: e.descricao,
+      preco: '$'.repeat(e.preco), agitacao: e.agitacao, capaCor: capaCor(e.cat), emoji: e.emoji || '🎉', descricao: e.descricao,
       views: e.visualizacoes, queroIrTotal: e.interests + (naLista ? 1 : 0), cliques: (e.clicks || 0) + (estado.cliquesLink[e.id] || 0),
       naLista, podeCheckin, jaCheckin, avaliacao: av ? av.nota : null,
       porque: sc ? { q: sc[2], h: sc[3], r: sc[4], abs: Math.round(sc[5] * 100), bonus: Math.max(0, nota100 - Math.round(sc[5] * 100)), pct: Math.round((1 - e.local_pct) * 100) || 1 } : null,
@@ -862,7 +863,7 @@ const Ficha = (() => {
     $('#cp-ok').onclick = () => { const codigo = 'BL-' + Math.random().toString(36).slice(2, 8).toUpperCase();
       Interface.registrarAcao('ticket', e.id, { qtd, valor: valor * qtd, codigo }); Interface.fecharSheets(); Interface.aviso('Ingresso garantido 🎟️ · veja em Meus Tickets'); };
   }
-  return { modelo, abrir, html, capaCor: cat => CAPA[cat] || '#24408E' };
+  return { modelo, abrir, html, capaCor };
 })();
 if (typeof module !== 'undefined') module.exports = Ficha;
 
