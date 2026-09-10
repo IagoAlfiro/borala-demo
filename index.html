@@ -41,7 +41,7 @@
   /* raios (rec. 14): cinco tokens + pílula; a moldura de 48 px (#tela) fica fora */
   --r-xs:4px; --r-s:8px; --r-m:12px; --r-l:16px; --r-xl:28px; --r-full:999px;
   /* escala tipográfica (rec. 6): piso 11 px (rótulo mono = 11/16 com tracking .06em); 42 só no wordmark .logo; exceção: atribuição do mapa a 10 px */
-  --t-11:11px; --t-12:12px; --t-13:13px; --t-15:15px; --t-17:17px; --t-20:20px; --t-24:24px; --t-28:28px; --t-34:34px;
+  --t-10:10px; --t-11:11px; --t-12:12px; --t-13:13px; --t-15:15px; --t-17:17px; --t-20:20px; --t-24:24px; --t-28:28px; --t-34:34px;
   /* folga acima do painel de cards para a legenda e o ◎ (altura do painel + 8 px); medida pelo verificar.py em 390×844 e 360×780 */
   --acima-painel:184px;
 }
@@ -94,15 +94,18 @@ body.tem-aovivo .tab .bola .ponto,body.tem-aovivo .ponto-vivo,body.tem-aovivo .p
 .pilha{display:flex;flex-direction:column;gap:9px}
 
 /* chips */
-.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;font-family:var(--mono);font-size:var(--t-11);line-height:16px;font-weight:400;background:var(--card);border:1.5px solid var(--borda-forte);border-radius:var(--r-full);padding:9px 14px;color:var(--texto2);letter-spacing:.06em;white-space:nowrap}
+.chip{flex:none;font-family:var(--mono);font-size:var(--t-10);line-height:16px;font-weight:400;background:var(--card);border:1.5px solid var(--borda-forte);border-radius:var(--r-full);padding:8px 9px;color:var(--texto2);letter-spacing:.04em;white-space:nowrap}
 .chip.on{background:var(--marca);border-color:var(--marca);color:var(--texto);font-weight:700}
 .chips-mini .chip{padding:7px 11px}
 .chip.sim{border-style:dashed;border-color:var(--ambar);color:var(--ambar)}
 .chip.tracejada{border-style:dashed;border-color:var(--marca-claro);color:var(--marca-claro)}
-.chip.periodo{padding:9px 11px}
-.chip.cat{border-color:var(--animado);color:var(--animado)}
+.chip.periodo,.chip.cat{padding:8px 10px;min-width:40px;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.chip.cat .icone{width:16px;height:16px}
+.chip.cat.on{background:var(--animado);border-color:var(--animado);color:var(--fundo)}
+.chips-fixos{display:flex;gap:6px;flex:none}
+.chips-cat{position:absolute;left:14px;right:14px;top:calc(var(--safe-t) + 48px);padding:2px 0}   /* linha de categorias que o 🎛 abre sobre o mapa */
 
 /* ===== AO VIVO ===== */
 #mapa{position:absolute;inset:0;bottom:calc(var(--tabbar) + var(--safe-b));background:var(--mapa)}
@@ -118,13 +121,14 @@ body.tem-aovivo .tab .bola .ponto,body.tem-aovivo .ponto-vivo,body.tem-aovivo .p
 .topo-mapa .chip.on{background:var(--marca)}
 .avatar{width:36px;height:36px;border-radius:50%;border:2px solid var(--marca);background:var(--card);flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:var(--t-15);position:relative}
 .avatar.grande{width:72px;height:72px;border-width:2.5px;font-size:var(--t-28);font-weight:900}
-.legenda{position:absolute;left:12px;bottom:calc(var(--tabbar) + var(--safe-b) + var(--acima-painel));min-height:44px;max-width:calc(100% - 80px);font-family:var(--mono);font-size:var(--t-11);line-height:16px;font-weight:700;color:var(--texto);background:rgba(22,29,48,.92);border:1px solid var(--borda);border-radius:var(--r-l);padding:6px 12px;letter-spacing:.06em;text-align:left;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.legenda{position:absolute;left:12px;bottom:calc(var(--tabbar) + var(--safe-b) + var(--acima-painel));min-height:32px;max-width:calc(100% - 80px);font-family:var(--mono);font-size:var(--t-10);line-height:16px;font-weight:700;color:var(--texto);background:rgba(22,29,48,.92);border:1px solid var(--borda);border-radius:var(--r-full);padding:6px 12px;letter-spacing:.04em;text-align:left;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.legenda[aria-expanded="true"]{border-radius:var(--r-l)}   /* compacta fechada (pílula); a explicação só aparece ao tocar */
 .legenda .pontos{display:inline-flex;gap:4px;margin-right:6px;vertical-align:middle}
 .legenda .pontos i{width:8px;height:8px;border-radius:50%;display:inline-block}
 .legenda .rampa{display:inline-block;width:34px;height:8px;border-radius:var(--r-xs);vertical-align:middle;margin-right:6px;background:linear-gradient(90deg,var(--tranquilo),var(--morno),var(--animado),var(--fervendo))}
 .legenda-corpo{font-weight:400;color:var(--texto2);letter-spacing:.04em;white-space:normal}
 .legenda .selo{align-self:flex-start}
-.legenda-linha .selo{display:inline-block;padding:2px 8px;margin-left:6px;vertical-align:middle;line-height:12px}
+.legenda-linha .selo{display:inline-block;padding:1px 7px;margin-left:6px;vertical-align:middle;line-height:12px;font-size:var(--t-10)}
 .btn-loc{position:absolute;right:12px;bottom:calc(var(--tabbar) + var(--safe-b) + var(--acima-painel));width:44px;height:44px;border-radius:50%;background:rgba(22,29,48,.92);border:1.5px solid var(--borda-forte);color:var(--texto2);display:flex;align-items:center;justify-content:center}
 .btn-loc .icone{width:20px;height:20px}
 .btn-loc.on{color:var(--usuario);border-color:var(--usuario)}
@@ -142,8 +146,8 @@ body.tem-aovivo .tab .bola .ponto,body.tem-aovivo .ponto-vivo,body.tem-aovivo .p
 .card .nome{font-weight:700;font-size:var(--t-13);line-height:1.15;letter-spacing:-.01em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card .linha{display:flex;flex-direction:column}   /* nota em cima, faixa em linha própria ('TRANQUILO' cabe nos ~70 px) */
 .card .nota{font-weight:900;font-size:var(--t-20);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.card .tier{font-family:var(--mono);font-size:var(--t-11);line-height:16px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
-.card .meta{font-family:var(--mono);font-size:var(--t-11);line-height:16px;color:var(--texto2);letter-spacing:0;white-space:nowrap;overflow:hidden}   /* Interface.metaCard: 'ATÉ 23H · R$ 40' / 'PUB · BOTAFOGO' */
+.card .tier{font-family:var(--mono);font-size:var(--t-10);line-height:14px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.card .meta{font-family:var(--mono);font-size:var(--t-10);line-height:15px;color:var(--texto2);letter-spacing:0;white-space:nowrap;overflow:hidden}   /* Interface.metaCard: 'ATÉ 23H · R$ 40' / 'PUB · BOTAFOGO' */
 /* vazio por causa (rec. 15): frase em Archivo 13 caixa normal + botão inline (LIMPAR BUSCA · VER TODOS · TENTE FDS) */
 .card.vazio{min-width:100%;max-width:none;padding:14px;color:var(--texto2);font-family:var(--sans);font-size:var(--t-13);line-height:1.5;letter-spacing:0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
 .vazio-acao{font-family:var(--mono);font-size:var(--t-11);line-height:16px;font-weight:700;letter-spacing:.06em;color:var(--texto);border:1.5px dashed var(--marca-claro);border-radius:var(--r-full);min-height:44px;padding:0 16px}
@@ -206,7 +210,7 @@ body.tem-aovivo .tab .bola .ponto,body.tem-aovivo .ponto-vivo,body.tem-aovivo .p
 /* ===== TAB BAR ===== */
 #tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(var(--tabbar) + var(--safe-b));padding-bottom:var(--safe-b);background:var(--superficie-alta);border-top:1px solid var(--borda);display:flex;align-items:stretch;z-index:20}
 .tab{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding-bottom:8px;color:var(--tab-inativa)}
-.tab span{font-family:var(--mono);font-size:var(--t-11);line-height:16px;font-weight:700;letter-spacing:.06em;white-space:nowrap;position:relative}
+.tab span{font-family:var(--mono);font-size:var(--t-10);line-height:14px;font-weight:700;letter-spacing:.06em;white-space:nowrap;position:relative}
 .tab.on{color:var(--texto)}
 .tab:not(.central)::before{content:'';position:absolute;top:7px;left:50%;width:48px;height:26px;margin-left:-24px;border-radius:var(--r-full);background:rgba(59,84,152,.35);opacity:0;transform:scaleX(.4);transition:transform var(--d-media) var(--ease-entra),opacity var(--d-media) var(--ease-padrao)}
 .tab.on:not(.central)::before{opacity:1;transform:scaleX(1)}
@@ -391,11 +395,15 @@ fieldset{border:0;min-width:0}
           <button class="chip on" data-j="agora">⚡ AGORA</button>
           <button class="chip" data-j="noite">🌙 HOJE À NOITE</button>
           <button class="chip" data-j="fds">🎉 FDS</button>
-          <button class="chip periodo" id="chip-periodo" aria-label="Escolher dia e hora">🗓️</button>
-          <button class="chip cat" id="chip-cat" hidden>🎛 SAMBA</button>
           <button class="chip sim" id="chip-sim" hidden>⏱ SEX 21H</button>
         </div>
+        <!-- fixos à direita (fora da faixa rolável): dia/hora e filtro de categoria -->
+        <div class="chips-fixos">
+          <button class="chip periodo" id="chip-periodo" aria-label="Escolher dia e hora">🗓️</button>
+          <button class="chip cat" id="chip-cat" aria-expanded="false" aria-controls="chips-cat" aria-label="Filtrar por categoria"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg><span></span></button>
+        </div>
       </div>
+      <div id="chips-cat" class="chips chips-cat" hidden></div>
       <button id="legenda" class="legenda" aria-expanded="false" title="Legenda do mapa"><span class="legenda-linha">NESTA ÁREA: –</span><span class="legenda-corpo" hidden></span></button>
       <button id="btn-loc" class="btn-loc" aria-label="Minha localização"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><line x1="2" x2="5" y1="12" y2="12"/><line x1="19" x2="22" y1="12" y2="12"/><line x1="12" x2="12" y1="2" y2="5"/><line x1="12" x2="12" y1="19" y2="22"/><circle cx="12" cy="12" r="7"/></svg></button>
       <div id="painel-cards" class="painel-cards"><svg class="alca" viewBox="0 0 36 6" aria-hidden="true"><path d="M1 3c2.7-2.7 5.3-2.7 8 0s5.3 2.7 8 0 5.3-2.7 8 0 5.3 2.7 8 0"/></svg><div class="cards"></div></div>
@@ -603,7 +611,7 @@ if (typeof module !== 'undefined') module.exports = Tempo;
 // `Mapa.regras` é puro (testado no node); o resto precisa do navegador.
 const Mapa = (() => {
   const VIS = { TIER_SHARES: [0.40, 0.25, 0.25, 0.10], FERVENDO_MIN: 80, ABS_FIRE: 95, FIRE_MIN: 86, FIRE_ANIM_MIN: 90, CONF_ANIM: 0.6,
-                Z_RUAS: 17, RUA_RAIO_M: 120, QUADRA_RAIO_M: 100,
+                Z_RUAS: 16, RUA_RAIO_M: 120, QUADRA_RAIO_M: 100,   // Z_RUAS 16 no app (o template_agora fica em 17): pedido do usuário em 10/09/2026
                 MOTION: true };   // false sob prefers-reduced-motion (lido em iniciar): chama estática e voos sem duração (rec. 17)
   const QUADROS_CHAMA = 22, FPS_CHAMA = 24;
   const TIER_COLORS = { azul: '#5f6880', amarelo: '#4E9D96', laranja: '#D9713E', rosa: '#FF8C70' };   // rosa = coral (auditoria 09/09/2026)
@@ -719,18 +727,19 @@ const Mapa = (() => {
   }
   // Legenda do mapa: diz só o que o código faz. z >= 14: pontos nas quatro tintas + faixa de notas e contagem da ÁREA VISTA;
   // z < 14: barrinha da rampa e o que a mancha significa. `corpo` (expandido) copia as regras acima com os números de VIS.
+  // legenda compacta: fechada é uma pílula ('55–98 · 68' ou 'CALOR'); a explicação inteira só aparece no corpo, ao tocar
   function legenda(visiveis, zoom, janela){
-    const corpo = 'COR DO BOTÃO = LUGAR NO SEU BAIRRO · FERVENDO = ' + Math.round(VIS.TIER_SHARES[3] * 100) + '% DE CIMA OU O 1º DO BAIRRO, COM NOTA > '
+    const regras = 'COR DO BOTÃO = LUGAR NO SEU BAIRRO · FERVENDO = ' + Math.round(VIS.TIER_SHARES[3] * 100) + '% DE CIMA OU O 1º DO BAIRRO, COM NOTA > '
       + VIS.FERVENDO_MIN + ' · 🔥 = NOTA ' + VIS.FIRE_MIN + '+ · ANEL = TOP 5 DO BAIRRO · Nº NO BOTÃO = AGRUPADOS';
     const estimativa = janela !== 'agora';
     if (zoom >= 14){
       const n = (visiveis || []).length;
-      let linha = 'NESTA ÁREA: NADA POR AGORA';
-      if (n){ const notas = visiveis.map(x => Math.round(x.score * 100));
-        linha = 'NESTA ÁREA ' + Math.min(...notas) + '–' + Math.max(...notas) + ' · ' + n + ' EVENTO' + (n > 1 ? 'S' : ''); }
-      return { linha, corpo, pontos: true, rampa: false, estimativa };
+      if (!n) return { linha: 'NADA POR AGORA', corpo: 'NENHUM EVENTO NA ÁREA VISTA · ' + regras, pontos: true, rampa: false, estimativa };
+      const notas = visiveis.map(x => Math.round(x.score * 100)), lo = Math.min(...notas), hi = Math.max(...notas);
+      return { linha: lo + '–' + hi + ' · ' + n, corpo: 'NESTA ÁREA: NOTAS DE ' + lo + ' A ' + hi + ' EM ' + n + ' EVENTO' + (n > 1 ? 'S' : '') + ' · ' + regras,
+               pontos: true, rampa: false, estimativa };
     }
-    return { linha: 'MANCHA = CONCENTRAÇÃO NA ÁREA VISTA · TOQUE ABRE O BAIRRO', corpo, pontos: false, rampa: true, estimativa };
+    return { linha: 'CALOR', corpo: 'MANCHA = CONCENTRAÇÃO NA ÁREA VISTA · TOQUE ABRE O BAIRRO · ' + regras, pontos: false, rampa: true, estimativa };
   }
   const regras = { quantileVC, tierKey, tierName, showZoom, classificar, dentro, distanciaKm, maisProxima, legenda, expandir, resetNormalizacao,
                    TIER_COLORS, TIER_TXT, BRASA, TOQUE_PX };
@@ -826,13 +835,16 @@ const Mapa = (() => {
   // ---------- MODO RUAS (variante clássica) ----------
   let vecSrcId = null, modoRuasAtivo = null, lastPaintKey = '';
   const MDEG = 111320;
+  // opacidade do calor e do halo por zoom; a variante RUAS apaga os dois enquanto o modo ruas entra (Z_RUAS - 0,2 … + 0,2)
+  const HEAT_OPACIDADE = ['interpolate', ['linear'], ['zoom'], 13, 0.75, 14, 0.68, 15, 0.6, 16, 0.5];
+  const HEAT_OPACIDADE_RUAS = ['interpolate', ['linear'], ['zoom'], 13, 0.75, 14, 0.68, 15, 0.6, VIS.Z_RUAS - 0.2, 0.32, VIS.Z_RUAS + 0.2, 0];
+  const HALO_OPACIDADE = ['interpolate', ['linear'], ['zoom'], 10, 0.18, 13, 0.27, 15, 0.35, 16, 0.38];
+  const HALO_OPACIDADE_RUAS = ['interpolate', ['linear'], ['zoom'], 10, 0.18, 13, 0.27, 15, 0.35, VIS.Z_RUAS - 0.1, 0.24, VIS.Z_RUAS + 0.3, 0];
   function setHeatFade(ativo){
     if (modoRuasAtivo === ativo || !map.getLayer('ev-heat')) return;
     modoRuasAtivo = ativo;
-    map.setPaintProperty('ev-heat', 'heatmap-opacity', ativo ? ['interpolate', ['linear'], ['zoom'], 13, 0.75, 14, 0.68, 15, 0.6, 16, 0.5, 16.8, 0.32, 17.2, 0]
-                                                            : ['interpolate', ['linear'], ['zoom'], 13, 0.75, 14, 0.68, 15, 0.6, 16, 0.5]);
-    map.setPaintProperty('ev-halo', 'circle-stroke-opacity', ativo ? ['interpolate', ['linear'], ['zoom'], 10, 0.35, 13, 0.5, 16, 0.15, 17.3, 0]
-                                                                   : ['interpolate', ['linear'], ['zoom'], 10, 0.35, 13, 0.5, 16, 0.15]);
+    map.setPaintProperty('ev-heat', 'heatmap-opacity', ativo ? HEAT_OPACIDADE_RUAS : HEAT_OPACIDADE);
+    map.setPaintProperty('ev-halo', 'circle-opacity', ativo ? HALO_OPACIDADE_RUAS : HALO_OPACIDADE);
   }
   function vectorSourceId(){
     if (vecSrcId) return vecSrcId;
@@ -910,22 +922,22 @@ const Mapa = (() => {
       'heatmap-weight': ['interpolate', ['linear'], ['get', 'w'], 0, 0.05, 1, 1.0],
       'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 9, 0.7, 12, 1.0, 15, 0.8, 16, 0.7],
       'heatmap-radius': ['interpolate', ['exponential', 2], ['zoom'], 9, 14, 12, 40, 14, 80, 16, 130],
-      'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 13, 0.75, 14, 0.68, 15, 0.6, 16, 0.5, 16.8, 0.32, 17.2, 0],
+      'heatmap-opacity': HEAT_OPACIDADE_RUAS,
       // rampa em HCL com as tintas do Vibemetro (uma por faixa) e BRASA no topo: quanto mais quente, mais claro
       'heatmap-color': ['interpolate-hcl', ['linear'], ['heatmap-density'], 0, 'rgba(13,27,42,0)', 0.15, hexRgba(TIER_COLORS.azul, 0.45),
                         0.40, hexRgba(TIER_COLORS.amarelo, 0.6), 0.65, hexRgba(TIER_COLORS.laranja, 0.75), 0.85, hexRgba(TIER_COLORS.rosa, 0.85),
                         1, hexRgba(BRASA, 0.95)] } }, ANTES);
-    // halo = ANEL na cor do fervendo (não uma segunda mancha), só para nota alta com confiança >= 0,3
+    // halo = brilho suave na cor do fervendo (o anel da auditoria fugia da linguagem do mapa), só para nota alta com confiança >= 0,3
     map.addLayer({ id: 'ev-halo', type: 'circle', source: 'eventos', filter: ['all', ['>=', ['get', 'vc'], 76], ['any', ['==', ['get', 'est'], 1], ['>=', ['get', 'conf'], 0.3]]], paint: {   // projeção (est=1) tem conf 0 por construção
-      'circle-radius': ['interpolate', ['exponential', 1.7], ['zoom'], 10, 8, 13, 22, 15, 50, 16, 74], 'circle-color': 'rgba(0,0,0,0)', 'circle-opacity': 0, 'circle-blur': 0,
-      'circle-stroke-color': TIER_COLORS.rosa, 'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 16, 2.5],
-      'circle-stroke-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.35, 13, 0.5, 16, 0.15, 17.3, 0] } }, ANTES);
+      'circle-radius': ['interpolate', ['exponential', 1.7], ['zoom'], 10, 8, 13, 22, 15, 50, 16, 74], 'circle-color': TIER_COLORS.rosa, 'circle-blur': 1.3,
+      'circle-opacity': HALO_OPACIDADE_RUAS } }, ANTES);
     map.addSource('ruas-quentes', { type: 'geojson', data: fc([]) }); map.addSource('quadras-quentes', { type: 'geojson', data: fc([]) });
-    map.addLayer({ id: 'quadras', type: 'fill', source: 'quadras-quentes', minzoom: VIS.Z_RUAS - 0.5, paint: { 'fill-color': ['get', 'c'], 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 16.6, 0, 17.2, ['get', 'o']] } }, ANTES);
-    map.addLayer({ id: 'ruas-glow', type: 'line', source: 'ruas-quentes', minzoom: VIS.Z_RUAS - 0.5, layout: { 'line-cap': 'round', 'line-join': 'round' },
-      paint: { 'line-color': ['get', 'c'], 'line-width': ['interpolate', ['exponential', 1.6], ['zoom'], 17, 14, 19, 30], 'line-blur': 4, 'line-opacity': ['interpolate', ['linear'], ['zoom'], 16.6, 0, 17.2, ['*', 0.5, ['get', 'o']]] } }, ANTES);
-    map.addLayer({ id: 'ruas', type: 'line', source: 'ruas-quentes', minzoom: VIS.Z_RUAS - 0.5, layout: { 'line-cap': 'round', 'line-join': 'round' },
-      paint: { 'line-color': ['get', 'c'], 'line-width': ['interpolate', ['exponential', 1.6], ['zoom'], 17, 5.5, 19, 11], 'line-blur': 0.4, 'line-opacity': ['interpolate', ['linear'], ['zoom'], 16.6, 0, 17.2, ['get', 'o']] } }, ANTES);
+    const Z = VIS.Z_RUAS, entrada = v => ['interpolate', ['linear'], ['zoom'], Z - 0.4, 0, Z + 0.2, v];   // as ruas entram entre Z-0,4 e Z+0,2
+    map.addLayer({ id: 'quadras', type: 'fill', source: 'quadras-quentes', minzoom: Z - 0.5, paint: { 'fill-color': ['get', 'c'], 'fill-opacity': entrada(['get', 'o']) } }, ANTES);
+    map.addLayer({ id: 'ruas-glow', type: 'line', source: 'ruas-quentes', minzoom: Z - 0.5, layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': ['get', 'c'], 'line-width': ['interpolate', ['exponential', 1.6], ['zoom'], Z, 14, Z + 2, 30], 'line-blur': 4, 'line-opacity': entrada(['*', 0.5, ['get', 'o']]) } }, ANTES);
+    map.addLayer({ id: 'ruas', type: 'line', source: 'ruas-quentes', minzoom: Z - 0.5, layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': ['get', 'c'], 'line-width': ['interpolate', ['exponential', 1.6], ['zoom'], Z, 5.5, Z + 2, 11], 'line-blur': 0.4, 'line-opacity': entrada(['get', 'o']) } }, ANTES);
     // nomes de bairro do CARTO: mais claros e com halo no azul do app, para lerem por cima do calor
     for (const id of ['place_suburbs', 'place_hamlet']) if (map.getLayer(id)){
       map.setPaintProperty(id, 'text-color', '#B8C0D4'); map.setPaintProperty(id, 'text-halo-color', '#0E1424'); map.setPaintProperty(id, 'text-halo-width', 1.2);
@@ -1695,7 +1707,8 @@ const Interface = (() => {
     $$('#chips-tempo .chip[data-j]').forEach(c => c.classList.toggle('on', !estado.periodo && c.dataset.j === estado.janela));
     const cp = $('#chip-periodo'); cp.classList.toggle('on', !!estado.periodo);
     cp.textContent = estado.periodo ? '🗓️ ' + Tempo.DIAS[estado.periodo.dia] + ' ' + String(estado.periodo.hora).padStart(2, '0') + 'H' : '🗓️';
-    const cc = $('#chip-cat'); cc.hidden = estado.categoria === 'TODOS'; cc.textContent = '🎛 ' + estado.categoria;
+    const cc = $('#chip-cat'), temCat = estado.categoria !== 'TODOS'; cc.querySelector('span').textContent = temCat ? ' ' + estado.categoria : ''; cc.classList.toggle('on', temCat);   // ícone sliders (Lucide) + categoria ativa
+    $$('#chips-cat .chip').forEach(c => c.classList.toggle('on', c.dataset.c === estado.categoria));
     const sim = $('#chip-sim'); sim.hidden = !estado.agoraSimulado;
     if (estado.agoraSimulado) sim.textContent = '⏱ ' + Tempo.DIAS[estado.agoraSimulado.dia] + ' ' + String(estado.agoraSimulado.hora).padStart(2, '0') + 'H';
   }
@@ -1938,7 +1951,12 @@ const Interface = (() => {
     $$('#chips-tempo .chip[data-j]').forEach(c => c.onclick = () => setJanela(c.dataset.j));
     $('#chip-sim').onclick = () => { estado.agoraSimulado = null; salvar(); recalcular(); };
     $('#chip-periodo').onclick = abrirPeriodo;
-    $('#chip-cat').onclick = () => setCategoria('TODOS');
+    // filtro de categoria sobre o mapa: o 🎛 abre/fecha uma linha de chips; escolher fecha a linha e recalcula
+    const linhaCat = $('#chips-cat'), btnCat = $('#chip-cat');
+    linhaCat.innerHTML = CATEGORIAS.map(c => `<button class="chip${estado.categoria === c ? ' on' : ''}" data-c="${c}">${c}</button>`).join('');
+    const mostrarCats = on => { linhaCat.hidden = !on; btnCat.setAttribute('aria-expanded', String(on)); };
+    btnCat.onclick = () => { mostrarCats(linhaCat.hidden); tatil('leve'); };
+    $$('#chips-cat .chip').forEach(c => c.onclick = () => { mostrarCats(false); setCategoria(c.dataset.c); });
     $('#btn-loc').onclick = localizar;
     $('#mapa-tentar').onclick = () => location.reload();
     $('#aviso').onclick = fecharAviso;
