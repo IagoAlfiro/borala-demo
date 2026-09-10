@@ -1,0 +1,17 @@
+{
+  "name": "Bora Lá (demonstração)",
+  "short_name": "Bora Lá",
+  "description": "O mapa de calor da noite carioca, ao vivo. Demonstração navegável do app do público.",
+  "id": "/borala-demo/",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "theme_color": "#0E1424",
+  "background_color": "#0E1424",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
